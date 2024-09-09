@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=vue_js_django_prototype
+POSTGRES_USER=ORBRibwZwKKORtHCOGzpYycdGMebIBrb
+POSTGRES_PASSWORD=9BSsw2nKTVciSFaewS88bBbq6LZSc9Zw63cXX1U3kEFoVEo5ZQL8QvBluRXzM6Uf

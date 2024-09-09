@@ -1,0 +1,16 @@
+services:
+  docs:
+    image: vue_js_django_prototype_local_docs
+    container_name: vue_js_django_prototype_local_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./vue_js_django_prototype:/app/vue_js_django_prototype:z
+    ports:
+      - '9000:9000'
+    command: /start-docs
