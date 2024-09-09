@@ -1,7 +1,7 @@
 volumes:
   vue_js_django_prototype_local_postgres_data: {}
   vue_js_django_prototype_local_postgres_data_backups: {}
-  
+
 
 services:
   django:
