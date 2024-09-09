@@ -1,0 +1,19 @@
+
+{% block title %}
+ Regeln 
+{% endblock title %}
+{% block content %}
+  {% csrf_token %}
+  <h2 class="mb-3 mt-4">Regeln Liste </h2>
+  
+{% endblock content %}
+{% block javascript %}
+
+  
+  {% if debug %}
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  {% else %}
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  {% endif %}
+
+{% endblock javascript %}

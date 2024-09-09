@@ -85,6 +85,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "vue_js_django_prototype.users",
+    "vue_js_django_prototype.rules",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
