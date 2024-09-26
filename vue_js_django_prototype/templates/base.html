@@ -23,6 +23,9 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer" />
       <!-- Your stuff: Third-party CSS libraries go here -->
+            
+      <!-- Bootstrap Icons -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
       <!-- This file stores project-specific CSS -->
       <link href="{% static 'css/project.css' %}" rel="stylesheet" />
     {% endblock css %}
@@ -103,7 +106,8 @@
         {% endif %}
         {% block main %}
           {% block content %}
-            <p>Use this document as a way to quick start any new project.</p>
+            <p>Django Cookie cutter default template</p>
+            <a class="btn btn-primary" href="{% url 'rules:rule_list_create'  %}">Django Vue.js app</a>
           {% endblock content %}
         {% endblock main %}
       </div>

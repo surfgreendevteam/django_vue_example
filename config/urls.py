@@ -21,7 +21,7 @@ urlpatterns = [
     path("users/", include("vue_js_django_prototype.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    path("rules/", include("vue_js_django_prototype.rules.urls")),
+    path("rules/", include("vue_js_django_prototype.rules.urls", namespace="rules")),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

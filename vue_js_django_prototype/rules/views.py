@@ -1,3 +1,6 @@
+import json
+
+from django.core.serializers.json import DjangoJSONEncoder
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 
@@ -13,4 +16,9 @@ class RuleListCreateView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Serialize the object to JSON
+        # https://docs.djangoproject.com/en/5.0/topics/serialization/#serialization-formats-json
+        context['rules_json'] = json.dumps(
+            list(Rule.objects.values('protocol', 'source', 'destination', 'destination_port')),
+            cls=DjangoJSONEncoder)
         return context

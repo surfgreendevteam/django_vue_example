@@ -1,19 +1,68 @@
+{% extends "base.html" %}
+
+{% load static %}
+
 
 {% block title %}
  Regeln 
 {% endblock title %}
 {% block content %}
   {% csrf_token %}
-  <h2 class="mb-3 mt-4">Regeln Liste </h2>
+  <h2 class="mb-3 mt-4">Regeln </h2>
   
+
+  <div id="vue-app">
+    <div class="card">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Protokoll</th>
+                    <th>Source</th>
+                    <th>Ziel</th>
+                    <th>Ziel Port</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="rule in rules">
+                    <td>[[ rule.protocol ]]</td>
+                    <td>[[ rule.source ]]</td>
+                    <td>[[ rule.destination ]]</td>
+                    <td>[[ rule.destination_port ]]</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm me-1">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tr>
+        </table>
+    </div>
+  </div>
+
 {% endblock content %}
 {% block javascript %}
 
   
   {% if debug %}
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script> console.log('Vue.js development version');</script>
   {% else %}
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script> console.log('Vue.js production version');</script>
   {% endif %}
+   
+   
+    <script type="text/javascript">
+         // create javascript object with rules from django context
+        var rules = {{ rules_json|safe }};
+        console.log(rules); 
+    </script>
+
+    <script src="{% static 'js/rules.js' %}"></script>
+   
 
 {% endblock javascript %}
