@@ -19,6 +19,7 @@
   <!-- off canvas for create new rule -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
+           {% comment %} vue js syntax {% endcomment %}
          <h5 id="offcanvasRightLabel">[[ editMode ? 'Regel aktualisieren' : 'Regel erstellen' ]]</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -26,7 +27,7 @@
       <form @submit.prevent="createRule">
             <div class="mb-3">
                 <label for="protocol" class="form-label">Protokoll</label>
-                <input type="text" class="form-control" id="protocol" v-model="newRule.protocol">
+                <input type="text" class="form-control" id="protocol" v-model="newRule.protocol">     {% comment %} vue-model {% endcomment %}
             </div>
             <div class="mb-3">
                 <label for="source" class="form-label">Source</label>
@@ -40,6 +41,7 @@
                 <label for="destination_port" class="form-label">Ziel Port</label>
                 <input type="text" class="form-control" id="destination_port" v-model="newRule.destination_port">
             </div>
+               {% comment %} vue js syntax {% endcomment %}
              <button type="submit" class="btn btn-primary">[[ editMode ? 'Aktualisieren' : 'Erstellen' ]]</button>
         </form>
     </div>
@@ -58,7 +60,8 @@
           </thead>
           <tbody>
               <tr v-for="rule in rules">
-                  <td>[[ rule.protocol ]]</td>
+                {% comment %} vue js syntax {% endcomment %}
+                  <td>[[ rule.protocol ]]</td>   
                   <td>[[ rule.source ]]</td>
                   <td>[[ rule.destination ]]</td>
                   <td>[[ rule.destination_port ]]</td>
@@ -66,7 +69,7 @@
                       <button class="btn btn-primary btn-sm me-1" @click="editRule(rule, index)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                           <i class="bi bi-pencil"></i>
                       </button>
-                      <button class="btn btn-danger btn-sm" @click="deleteRule(rule.id)">
+                      <button class="btn btn-danger btn-sm" @click="deleteRule(rule.id)">    {% comment %} vue method {% endcomment %}
                           <i class="bi bi-trash"></i>
                       </button>
                   </td>
@@ -80,7 +83,7 @@
 {% endblock content %}
 {% block javascript %}
 
-  
+     {% comment %} loading vue production or development version {% endcomment %}
   {% if debug %}
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script> console.log('Vue.js development version');</script>
@@ -103,7 +106,7 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer">
     </script>
-
+    <!-- JS fiel containing the vue app -->
     <script src="{% static 'js/rules.js' %}"></script>
 
    
