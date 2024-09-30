@@ -15,29 +15,37 @@ domReady(() => {
     // initialize the vue app
     createApp({
         delimiters: ['[[', ']]'],
+        /**
+         * Vue.js uses {{ }} for its templating syntax, which conflicts with Django's template tags. 
+         * To avoid this conflict, the delimiters in the Vue.js application are changed to [[ ]] using the delimiters property. 
+         */
 
         data() {
             return {
-                rules : rules, // we are passing the rules from the template
-                apiOptions: null,
-                rulesListApiUrl: '/api/rules/',
-                newRule: {
+                rules : rules, // we are passing the rules from the templates context to the vue app 
+                rulesFromApi: [], 
+                apiOptions: null,  // API options for creating/updating rules
+                rulesListApiUrl: '/api/rules/',   // URL for the rules API
+                newRule: {        // Form data for creating/updating a rule
                     protocol: '',
                     source: '',
                     destination: '',
                     destination_port: ''
                     },
-                editMode: false, // Add a flag to track if we are in edit mode
+                editMode: false, // Flag to track if we are in edit mode
                 editingRuleId: null, // Store the rule id we are editing
             }
         },
 
         methods: {
             getCsrfToken() {
+                // Fetch CSRF token from a hidden input field to use in POST, PUT, DELETE requests
                 const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
                 return csrfInput ? csrfInput.value : null;
             },
+
             fetchRulesApiOptions() {
+                // Fetch API options to understand available actions this is useful but optional
                 fetch(this.rulesListApiUrl, {
                     method: 'OPTIONS',
                     headers: {
@@ -56,6 +64,39 @@ domReady(() => {
                     console.error('Error fetching options:', error);
                 });
             },
+
+            /**
+             * Fetches rules from the API and updates the `rules` data property.
+             * 
+             * This method sends a GET request to the `rulesListApiUrl` to fetch the rules.
+             * The fetched rules are then assigned to the `rules` data property.
+             * 
+             * Comparison to getting rules from context through the template:
+             * - Context through template: The rules are passed from the Django context to the template and saved to a JavaScript variable. 
+             *                              This approach is faster as the data is already available when the page loads.
+             * - Fetching from API: This method fetches the rules from the API after the page has loaded. 
+             *                      This approach is more dynamic and can be used to refresh the data without reloading the page.
+             * 
+             * Note: This variable (ruelsFromApi) defined form within this method is not applied at the moment.
+             */
+            fetchRulesFromApi() {
+
+                fetch(this.rulesListApiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    this.rulesFromApi = data;
+                    console.log('Rules fetched from API:', data);
+                })
+                .catch(error => {
+                    console.error('Error fetching rules:', error);
+                });
+            },
+
             createRule() {
                 // If in edit mode, update the rule instead of creating it
                 if (this.editMode) {
@@ -66,7 +107,7 @@ domReady(() => {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRFToken': this.getCsrfToken(),
+                            'X-CSRFToken': this.getCsrfToken(),  // // Include CSRF token
                         },
                         body: JSON.stringify(this.newRule),
                     })
@@ -147,6 +188,7 @@ domReady(() => {
             },
         },
         beforeMount() {
+            // Fetch available API options before the Vue component is mounted
             this.fetchRulesApiOptions();
         }
     }).mount('#vue-app');

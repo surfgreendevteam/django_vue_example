@@ -107,7 +107,15 @@
         {% block main %}
           {% block content %}
             <p>Django Cookie cutter default template</p>
-            <a class="btn btn-primary" href="{% url 'rules:rule_list_create'  %}">Django Vue.js app</a>
+            <a class="btn btn-primary" href="{% url 'rules:rule_list_create'  %}">Django Vue.js Example Rules app</a>
+             {% if request.user.is_authenticated %}
+                  <p>{% translate "Sie sind eingeloggt" %}</p>
+                  <h4>API Docs</h4>
+                  <a class="btn btn-secondary" href="{% url 'api-docs' %}">API Docs (DjangoREST framework)</a>
+                  
+                {% else %}
+                  <p>{% translate "Bitte loggen sie sich ein mm die Api Nutzen zu koennen. Und die Api docs erreichen koennen" %}</p>
+              {% endif %}
           {% endblock content %}
         {% endblock main %}
       </div>
