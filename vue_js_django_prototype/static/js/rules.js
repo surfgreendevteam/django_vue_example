@@ -16,14 +16,14 @@ domReady(() => {
     createApp({
         delimiters: ['[[', ']]'],
         /**
-         * Vue.js uses {{ }} for its templating syntax, which conflicts with Django's template tags. 
-         * To avoid this conflict, the delimiters in the Vue.js application are changed to [[ ]] using the delimiters property. 
+         * Vue.js uses {{ }} for its templating syntax, which conflicts with Django's template tags.
+         * To avoid this conflict, the delimiters in the Vue.js application are changed to [[ ]] using the delimiters property.
          */
 
         data() {
             return {
-                rules : rules, // we are passing the rules from the templates context to the vue app 
-                rulesFromApi: [], 
+                rules : rules, // we are passing the rules from the templates context to the vue app
+                rulesFromApi: [],
                 apiOptions: null,  // API options for creating/updating rules
                 rulesListApiUrl: '/api/rules/',   // URL for the rules API
                 newRule: {        // Form data for creating/updating a rule
@@ -56,7 +56,7 @@ domReady(() => {
                 .then(data => {
                     if (data.actions) {
                         this.apiOptions = data.actions;
-                        
+
                     }
                     console.log('API Options:', this.apiOptions)
                 })
@@ -67,16 +67,16 @@ domReady(() => {
 
             /**
              * Fetches rules from the API and updates the `rules` data property.
-             * 
+             *
              * This method sends a GET request to the `rulesListApiUrl` to fetch the rules.
              * The fetched rules are then assigned to the `rules` data property.
-             * 
+             *
              * Comparison to getting rules from context through the template:
-             * - Context through template: The rules are passed from the Django context to the template and saved to a JavaScript variable. 
+             * - Context through template: The rules are passed from the Django context to the template and saved to a JavaScript variable.
              *                              This approach is faster as the data is already available when the page loads.
-             * - Fetching from API: This method fetches the rules from the API after the page has loaded. 
+             * - Fetching from API: This method fetches the rules from the API after the page has loaded.
              *                      This approach is more dynamic and can be used to refresh the data without reloading the page.
-             * 
+             *
              * Note: This variable (ruelsFromApi) defined form within this method is not applied at the moment.
              */
             fetchRulesFromApi() {
@@ -187,7 +187,7 @@ domReady(() => {
                 this.editingRuleId = null;
             },
         },
-        
+
         beforeMount() {
             // Fetch available API options before the Vue component is mounted
             this.fetchRulesApiOptions();

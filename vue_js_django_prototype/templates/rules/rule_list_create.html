@@ -2,113 +2,131 @@
 
 {% load static %}
 
-
 {% block title %}
- Regeln 
+  Regeln
 {% endblock title %}
 {% block content %}
-{% csrf_token %}
-
-<div id="vue-app">
-  <!-- hidden input to transfer django CSRF tokken to vue-->
-  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-  <div class="d-flex justify-content-between align-items-center">
-    <h2 class="mb-3 mt-4">Regeln </h2>
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Neue Regel hinzufügen</button>
-  </div>
-  <!-- off canvas for create new rule -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header">
-           {% comment %} vue js syntax {% endcomment %}
-         <h5 id="offcanvasRightLabel">[[ editMode ? 'Regel aktualisieren' : 'Regel erstellen' ]]</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  {% csrf_token %}
+  <div id="vue-app">
+    <!-- hidden input to transfer django CSRF tokken to vue-->
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="mb-3 mt-4">Regeln</h2>
+      <button class="btn btn-primary"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasRight"
+              aria-controls="offcanvasRight">Neue Regel hinzufügen</button>
     </div>
-    <div class="offcanvas-body">
-      <form @submit.prevent="createRule">
-            <div class="mb-3">
-                <label for="protocol" class="form-label">Protokoll</label>
-                <input type="text" class="form-control" id="protocol" v-model="newRule.protocol">     {% comment %} vue-model {% endcomment %}
-            </div>
-            <div class="mb-3">
-                <label for="source" class="form-label">Source</label>
-                <input type="text" class="form-control" id="source" v-model="newRule.source">
-            </div>
-            <div class="mb-3">
-                <label for="destination" class="form-label">Ziel</label>
-                <input type="text" class="form-control" id="destination" v-model="newRule.destination">
-            </div>
-            <div class="mb-3">
-                <label for="destination_port" class="form-label">Ziel Port</label>
-                <input type="text" class="form-control" id="destination_port" v-model="newRule.destination_port">
-            </div>
-               {% comment %} vue js syntax {% endcomment %}
-             <button type="submit" class="btn btn-primary">[[ editMode ? 'Aktualisieren' : 'Erstellen' ]]</button>
+    <!-- off canvas for create new rule -->
+    <div class="offcanvas offcanvas-end"
+         tabindex="-1"
+         id="offcanvasRight"
+         aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        {% comment %} vue js syntax {% endcomment %}
+        <h5 id="offcanvasRightLabel">[[ editMode ? 'Regel aktualisieren' : 'Regel erstellen' ]]</h5>
+        <button type="button"
+                class="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <form @submit.prevent="createRule">
+          <div class="mb-3">
+            <label for="protocol" class="form-label">Protokoll</label>
+            <input type="text"
+                   class="form-control"
+                   id="protocol"
+                   v-model="newRule.protocol" />
+            {% comment %} vue-model {% endcomment %}
+          </div>
+          <div class="mb-3">
+            <label for="source" class="form-label">Source</label>
+            <input type="text" class="form-control" id="source" v-model="newRule.source" />
+          </div>
+          <div class="mb-3">
+            <label for="destination" class="form-label">Ziel</label>
+            <input type="text"
+                   class="form-control"
+                   id="destination"
+                   v-model="newRule.destination" />
+          </div>
+          <div class="mb-3">
+            <label for="destination_port" class="form-label">Ziel Port</label>
+            <input type="text"
+                   class="form-control"
+                   id="destination_port"
+                   v-model="newRule.destination_port" />
+          </div>
+          {% comment %} vue js syntax {% endcomment %}
+          <button type="submit" class="btn btn-primary">[[ editMode ? 'Aktualisieren' : 'Erstellen' ]]</button>
         </form>
+      </div>
+    </div>
+    <div class="card">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Protokoll</th>
+            <th>Source</th>
+            <th>Ziel</th>
+            <th>Ziel Port</th>
+            <th>Aktion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="rule in rules">
+            {% comment %} vue js syntax {% endcomment %}
+            <td>[[ rule.protocol ]]</td>
+            <td>[[ rule.source ]]</td>
+            <td>[[ rule.destination ]]</td>
+            <td>[[ rule.destination_port ]]</td>
+            <td>
+              <button class="btn btn-primary btn-sm me-1"
+                      @click="editRule(rule, index)"
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasRight"
+                      aria-controls="offcanvasRight">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-danger btn-sm" @click="deleteRule(rule.id)">
+                {% comment %} vue method {% endcomment %}
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tr>
+      </table>
     </div>
   </div>
-  
-  <div class="card">
-      <table class="table table-striped">
-          <thead>
-              <tr>
-                  <th>Protokoll</th>
-                  <th>Source</th>
-                  <th>Ziel</th>
-                  <th>Ziel Port</th>
-                  <th>Aktion</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr v-for="rule in rules">
-                {% comment %} vue js syntax {% endcomment %}
-                  <td>[[ rule.protocol ]]</td>   
-                  <td>[[ rule.source ]]</td>
-                  <td>[[ rule.destination ]]</td>
-                  <td>[[ rule.destination_port ]]</td>
-                  <td>
-                      <button class="btn btn-primary btn-sm me-1" @click="editRule(rule, index)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                          <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-danger btn-sm" @click="deleteRule(rule.id)">    {% comment %} vue method {% endcomment %}
-                          <i class="bi bi-trash"></i>
-                      </button>
-                  </td>
-              </tr>
-              </tr>
-      </table>
-  </div>
-
-</div>
-
 {% endblock content %}
 {% block javascript %}
-
-     {% comment %} loading vue production or development version {% endcomment %}
+  {% comment %} loading vue production or development version {% endcomment %}
   {% if debug %}
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script> console.log('Vue.js development version');</script>
+    <script>
+      console.log('Vue.js development version');
+    </script>
   {% else %}
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script> console.log('Vue.js production version');</script>
+    <script>
+      console.log('Vue.js production version');
+    </script>
   {% endif %}
-   
-   
-    <script type="text/javascript">
-         // create javascript object with rules from django context that can be used in vue.js
-         // this is one way to pass data from django to vue.js quick without using Django REST API
-        var rules = {{ rules_json|safe }};
-        console.log("Ruels from Context",rules); 
-    </script>
-
-    <!-- Bootstrap JS -->
-    <script defer
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer">
-    </script>
-    <!-- JS fiel containing the vue app -->
-    <script src="{% static 'js/rules.js' %}"></script>
-
-   
-
+  <script type="text/javascript">
+    // create javascript object with rules from django context that can be used in vue.js
+    // this is one way to pass data from django to vue.js quick without using Django REST API
+    var rules = {
+      {
+        rules_json | safe
+      }
+    };
+    console.log("Ruels from Context", rules);
+  </script>
+  <!-- Bootstrap JS -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer">
+  </script>
+  <!-- JS fiel containing the vue app -->
+  <script src="{% static 'js/rules.js' %}"></script>
 {% endblock javascript %}

@@ -6,5 +6,5 @@ app_name = "rules"
 
 
 urlpatterns = [
-    path('', RuleListCreateView.as_view(), name='rule_list_create'),
+    path("", RuleListCreateView.as_view(), name="rule_list_create"),
 ]

@@ -23,9 +23,9 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer" />
       <!-- Your stuff: Third-party CSS libraries go here -->
-            
       <!-- Bootstrap Icons -->
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
+            rel="stylesheet" />
       <!-- This file stores project-specific CSS -->
       <link href="{% static 'css/project.css' %}" rel="stylesheet" />
     {% endblock css %}
@@ -107,15 +107,14 @@
         {% block main %}
           {% block content %}
             <p>Django Cookie cutter default template</p>
-            <a class="btn btn-primary" href="{% url 'rules:rule_list_create'  %}">Django Vue.js Example Rules app</a>
-             {% if request.user.is_authenticated %}
-                  <p>{% translate "Sie sind eingeloggt" %}</p>
-                  <h4>API Docs</h4>
-                  <a class="btn btn-secondary" href="{% url 'api-docs' %}">API Docs (DjangoREST framework)</a>
-                  
-                {% else %}
-                  <p>{% translate "Bitte loggen sie sich ein um die Api Nutzen zu koennen. Und die Api docs einzusehen" %}</p>
-              {% endif %}
+            <a class="btn btn-primary" href="{% url 'rules:rule_list_create' %}">Django Vue.js Example Rules app</a>
+            {% if request.user.is_authenticated %}
+              <p>{% translate "Sie sind eingeloggt" %}</p>
+              <h4>API Docs</h4>
+              <a class="btn btn-secondary" href="{% url 'api-docs' %}">API Docs (DjangoREST framework)</a>
+            {% else %}
+              <p>{% translate "Bitte loggen sie sich ein um die Api Nutzen zu koennen. Und die Api docs einzusehen" %}</p>
+            {% endif %}
           {% endblock content %}
         {% endblock main %}
       </div>

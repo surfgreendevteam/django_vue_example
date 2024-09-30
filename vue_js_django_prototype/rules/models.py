@@ -7,13 +7,10 @@ class Rule(models.Model):
     source = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
     destination_port = models.CharField(max_length=10)
-   
 
     class Meta:
         verbose_name = _("Regel")
-        verbose_name_plural = _("Regeln") 
-        
+        verbose_name_plural = _("Regeln")
 
     def __str__(self):
         return f"{self.source} - {self.destination}"
-
