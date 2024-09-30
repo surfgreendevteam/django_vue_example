@@ -187,9 +187,11 @@ domReady(() => {
                 this.editingRuleId = null;
             },
         },
+        
         beforeMount() {
             // Fetch available API options before the Vue component is mounted
             this.fetchRulesApiOptions();
+            this.fetchRulesFromApi();
         }
     }).mount('#vue-app');
     });
