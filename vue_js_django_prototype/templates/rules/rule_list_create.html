@@ -114,16 +114,16 @@
       console.log('Vue.js production version');
     </script>
   {% endif %}
-  <script type="text/javascript">
-    // create javascript object with rules from django context that can be used in vue.js
-    // this is one way to pass data from django to vue.js quick without using Django REST API
-    var rules = {
-      {
-        rules_json | safe
-      }
-    };
-    console.log("Ruels from Context", rules);
+  <!-- djlint:off -->
+    <!-- having the Django syntax inside the script tag requieres disabling the linter -->
+      <script type="text/javascript">
+      console.log("Rules from Context where?? ")
+      // create javascript object with rules from django context that can be used in vue.js
+      // this is one way to pass data from django to vue.js quick without using Django REST API
+      var rules = {{ rules_json|safe }};
+      console.log(rules);
   </script>
+  <!-- djlint:on -->
   <!-- Bootstrap JS -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer">
   </script>
