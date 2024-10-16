@@ -67,26 +67,11 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
-                {% if request.user.is_authenticated %}
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:detail' request.user.pk %}">{% translate "My Profile" %}</a>
-                  </li>
-                  <li class="nav-item">
-                    {# URL provided by django-allauth/account/urls.py #}
-                    <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a>
-                  </li>
-                {% else %}
-                  {% if ACCOUNT_ALLOW_REGISTRATION %}
-                    <li class="nav-item">
-                      {# URL provided by django-allauth/account/urls.py #}
-                      <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% translate "Sign Up" %}</a>
-                    </li>
-                  {% endif %}
-                  <li class="nav-item">
-                    {# URL provided by django-allauth/account/urls.py #}
-                    <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Sign In" %}</a>
-                  </li>
-                {% endif %}
+
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'api-docs' %}">API Docs (DjangoREST framework)</a>
+                </li>
+                
               </ul>
             </div>
           </div>
@@ -106,15 +91,11 @@
         {% endif %}
         {% block main %}
           {% block content %}
-            <p>Django Cookie cutter default template</p>
+            <p>Django Cookiecutter default template</p>
             <a class="btn btn-primary" href="{% url 'rules:rule_list_create' %}">Django Vue.js Example Rules app</a>
-            {% if request.user.is_authenticated %}
-              <p>{% translate "Sie sind eingeloggt" %}</p>
-              <h4>API Docs</h4>
-              <a class="btn btn-secondary" href="{% url 'api-docs' %}">API Docs (DjangoREST framework)</a>
-            {% else %}
-              <p>{% translate "Bitte loggen sie sich ein um die Api Nutzen zu koennen. Und die Api docs einzusehen" %}</p>
-            {% endif %}
+           
+              
+            
           {% endblock content %}
         {% endblock main %}
       </div>
